@@ -8,6 +8,8 @@ export default st => html`
     <h2>Click Below To See James McMinn's Planned Capstone</h2>
     <a href="https://github.com/jman114/CapStone">See My Capstone Plan!</a>
   </section>
-  Weather in ${st.weather.city} ${kelvinToFahrenheit(st.weather.temp)}F, feels
-  like ${kelvinToFahrenheit(st.weather.feelsLike)}F
+  <h2>
+    Weather in ${st.weather.city} ${kelvinToFahrenheit(st.weather.temp)}F, feels
+    like ${kelvinToFahrenheit(st.weather.feelsLike)}F
+  </h2>
 `;
