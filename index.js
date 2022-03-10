@@ -4,6 +4,9 @@ import Navigo from "navigo";
 import { capitalize } from "lodash";
 import axios from "axios";
 
+// import dotenv from "dotenv";
+// dotenv.config();
+
 const router = new Navigo("/");
 function render(st) {
   document.querySelector("#root").innerHTML = `
@@ -33,13 +36,14 @@ function addEventListeners() {
 router.hooks({
   before: (done, params) => {
     const page =
-      params && params.hasOwnProperty("page")
-        ? capitalize(params.page)
+      params && params.data && params.data.page
+        ? capitalize(params.data.page)
         : "Home";
+
     if (page === "Home") {
       axios
         .get(
-          `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.OPEN_WEATHER_MAP_API_KEY}&q=st.%20louis`
+          `https://api.openweathermap.org/data/2.5/weather?q=st.%20louis&appid=${process.env.OPEN_WEATHER_MAP_API_KEY}`
         )
         .then(response => {
           state.Home.weather = {};
@@ -50,17 +54,19 @@ router.hooks({
           done();
         })
         .catch(err => console.log(err));
-    }
-    if (page === "Pizza") {
+    } else if (page === "Pizza") {
       axios
         .get(`${process.env.PIZZA_PLACE_API_URL}`)
         .then(response => {
+          console.log(response.data);
           state.Pizza.pizzas = response.data;
           done();
         })
         .catch(error => {
           console.log("It puked", error);
         });
+    } else {
+      done();
     }
   }
 });
