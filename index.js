@@ -9,7 +9,7 @@ dotenv.config();
 
 const router = new Navigo("/");
 
-function render(st) {
+function render(st = state.Home) {
   document.querySelector("#root").innerHTML = `
     ${Header(st)}
     ${Nav(state.Links)}
@@ -18,9 +18,9 @@ function render(st) {
   `;
   router.updatePageLinks();
 
-  addEventListeners();
+  addEventListeners(st);
 }
-function addEventListeners() {
+function addEventListeners(st) {
   // add event listeners to Nav items for navigation
   document.querySelectorAll("nav a").forEach(navLink =>
     navLink.addEventListener("click", event => {
@@ -39,8 +39,8 @@ router.hooks({
   before: (done, params) => {
     const page =
       // eslint-disable-next-line no-prototype-builtins
-      params && params.hasOwnProperty("page")
-        ? capitalize(params.page)
+      params && params.data && params.data.page
+        ? capitalize(params.data.page)
         : "Home";
 
     if (page === "Home") {
@@ -57,8 +57,7 @@ router.hooks({
           done();
         })
         .catch(err => console.log(err));
-    }
-    if (page === "Pizza") {
+    } else if (page === "Pizza") {
       axios
         .get(`${process.env.PIZZA_PLACE_API_URL}`)
         .then(response => {
