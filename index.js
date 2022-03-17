@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const router = new Navigo("/");
+
 function render(st) {
   document.querySelector("#root").innerHTML = `
     ${Header(st)}
@@ -16,9 +17,10 @@ function render(st) {
     ${Footer()}
   `;
   router.updatePageLinks();
+
   addEventListeners();
 }
-function addEventListeners() {
+function addEventListeners(st) {
   // add event listeners to Nav items for navigation
   document.querySelectorAll("nav a").forEach(navLink =>
     navLink.addEventListener("click", event => {
