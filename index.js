@@ -20,7 +20,7 @@ function render(st) {
 
   addEventListeners();
 }
-function addEventListeners(st) {
+function addEventListeners() {
   // add event listeners to Nav items for navigation
   document.querySelectorAll("nav a").forEach(navLink =>
     navLink.addEventListener("click", event => {
