@@ -1,7 +1,7 @@
 import html from "html-literal";
 
 export default () => html`
-  <form id="order" method="POST" action="https://formspree.io/f/xvolrzjb">
+  <form id="order" method="" action="">
     <h2>Order a pizza</h2>
     <div>
       <label for="crust">Crust:</label>
